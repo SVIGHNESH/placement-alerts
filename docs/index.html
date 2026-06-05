@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RBCET Placement Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,900&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f7f1e5;--ink:#1b2433;--accent:#d96f1e;--muted:#6f6757;--card:#fffdf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font:16px/1.5 "IBM Plex Sans",sans-serif;
+ background-image:radial-gradient(#00000010 1px,transparent 1px);
+ background-size:22px 22px}
+header{border-bottom:3px double var(--ink);padding:26px 16px 14px;
+ max-width:880px;margin:0 auto}
+h1{font-family:Fraunces,serif;font-weight:900;font-size:clamp(30px,6vw,52px);
+ margin:0;letter-spacing:-.02em}
+h1 em{color:var(--accent);font-style:normal}
+.sub{color:var(--muted);font-size:14px;margin-top:6px}
+.sub b{color:var(--ink)}
+.bar{position:sticky;top:0;background:var(--paper);z-index:5;
+ border-bottom:1px solid #00000022;padding:10px 16px;max-width:880px;margin:0 auto}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.chip{font:600 13px "IBM Plex Sans",sans-serif;border:1.5px solid var(--ink);
+ background:transparent;color:var(--ink);padding:6px 12px;border-radius:999px;
+ cursor:pointer;white-space:nowrap}
+.chip.active{background:var(--ink);color:var(--paper)}
+#q{width:100%;margin-top:8px;padding:9px 12px;border:1.5px solid var(--ink);
+ border-radius:8px;background:var(--card);font:inherit}
+main{max-width:880px;margin:0 auto;padding:8px 16px 40px}
+.cat h2{font-family:Fraunces,serif;font-weight:700;font-size:22px;
+ border-left:6px solid var(--cc);padding-left:10px;margin:26px 0 10px}
+.cat h2 small{color:var(--muted);font:600 13px "IBM Plex Sans",sans-serif}
+.card{background:var(--card);border:1px solid #00000018;border-left:4px solid var(--cc);
+ border-radius:8px;padding:12px 14px;margin:8px 0;box-shadow:2px 2px 0 #00000010}
+.card a{color:var(--ink);font-weight:600;text-decoration:none}
+.card a:hover{text-decoration:underline;text-decoration-color:var(--accent)}
+.meta{color:var(--muted);font-size:13px;margin-top:4px}
+.new{background:var(--accent);color:#fff;font:700 11px "IBM Plex Sans",sans-serif;
+ padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:2px}
+.hide{display:none}
+footer{max-width:880px;margin:0 auto;padding:18px 16px 50px;color:var(--muted);
+ font-size:13px;border-top:3px double var(--ink)}
+footer a{color:var(--accent)}
+</style></head><body>
+<header>
+ <h1>RBCET <em>Placement</em> Board</h1>
+ <div class="sub">Dept. of CSE/AI · auto-refreshed 4&times; daily ·
+  last update <b>05 Jun 2026, 01:30 PM IST</b> · <b>7</b> postings ·
+  <b>7</b> new in 24h</div>
+</header>
+<div class="bar">
+ <div class="chips"><button class="chip active" data-f="all">All</button><button class="chip" data-f="new">New 24h</button><button class="chip" data-f="Big Tech &amp; GCC">Big Tech &amp; GCC</button><button class="chip" data-f="General">General</button></div>
+ <input id="q" type="search" placeholder="Search company or keyword&hellip;">
+</div>
+<main><section class="cat" data-cat="Big Tech &amp; GCC" style="--cc:#1f4e79"><h2>Big Tech &amp; GCC <small>2</small></h2><article class="card" data-cat="Big Tech &amp; GCC" data-new="1"><a href="https://news.google.com/rss/articles/CBMi1wFBVV95cUxPNU1Ib1hrNUpkc01RWVZHd2Via1hFZkItXzQwTlJUeVhnYTNGWG5qaWJNUHJpeXZCendGYnN0WkFaMHJ4TmhxTElXVWh4X2dYVUpleXg2R3pKR2RSX3FJVGNKNkxjQjFVZGtISzVtMkhNQjNlTzlKZ2pCTVRJREQ1WFRUSnZjbFdmQWdHM2hHbFB4Y3dvQXhBQzgwcXhfTk0walVWTUs0TVNhWlNJSmxaRVZlQzJuN1BkR0p0M2E3WTE0MlRybzd3eEFNemNQSG1OanJkYlJEWdIB3AFBVV95cUxOVnJfNDFDTXd3cHhMMHJYcmFnWk9JcTh0dUptaFd0WkFoRl9Ialg5TkI0ZjdxenlRcWt2XzhiQndUTUtvVDFwSXUyRHhEbDhTZlhuamV1blRid3RtbUM0Z0hpWlVHdzVORzBocXQwTHBWMkd0Z2Z0WTBJcFluMk82UVBoZ01vWDQwRWpvQV9ZU2xZZUVveXdzU3IxZWQzNDZYQVk2dTRvTU5xSHZ3cEh3aE9xOEl6dkd3R3RkYkdqWkVFSTVFQUVkX1BXMlY1OFk4V1VJUDkxd3k3aTVf?oc=5" target="_blank" rel="noopener">AI/ML, Insurance Roles Drive Stable White-Collar Hiring In India In May; Hyderabad Leads Job Growth: Report - Free Press Journal</a><span class="new">NEW</span><div class="meta"><span>Free Press Journal</span> · <span>spotted 1 min ago</span></div></article><article class="card" data-cat="Big Tech &amp; GCC" data-new="1"><a href="https://news.google.com/rss/articles/CBMi9gFBVV95cUxQWjhPandwU1J4YWg1OHJ4TzFyZlNzREtwMEFKSktUaWlvOU0wYUp1WFU5SDBkVnJFVWZLZ0lyZzBER2tBdnhXanl5bXUxbTYzNGxpaGUyVzd6U3ZsbUNWQ0NIcUU1Rk5DZlNpVEptOGtMRDJfUjFmM3JhSVhON0hEUFVwWkdvbjB4UFBneURCNzgzV2hrY09LQkRmcld0aEh0V2VlUnduOXRhVG9ITWU3eGJiUFJqaDRVTnRWbVJQZElHU0E2b1ZpRzVCQVJDbmtYenJFTVU1VEtwUXA2dDF2ODZuVldUU1Y3Y1Rfdl9LYkZETERMYlE?oc=5" target="_blank" rel="noopener">Chandigarh University Hosts 3rd Edition of &#x27;CU Scholars&#x27; Summit 2026&#x27;, 3000 CUCET 2026 Toppers from 22 States &amp; UTs Felicitated - India&#x27;s News.Net</a><span class="new">NEW</span><div class="meta"><span>India&#x27;s News.Net</span> · <span>spotted 1 min ago</span></div></article></section><section class="cat" data-cat="General" style="--cc:#5a5247"><h2>General <small>5</small></h2><article class="card" data-cat="General" data-new="1"><a href="https://news.google.com/rss/articles/CBMi0AFBVV95cUxNcmpqNkctLUhYX2dsV1FyNFZ6NTVFdjBYcTdzWmkwUTJTdnBaYjBTQ25Yb25qbVJzRTg3NHd1LWFNeF9YZm9Yc19PZzRiUDNVRE9XM3oySzRjVTd2RU9BQnNwSkwzWTU5aWVseHFXTWN1ZWxLUlFNLVduZDR5OG11QUZKZkt0bXJKeV9HUUhaWlVXQ0szMVJWT0lacHVkRjdYTFc4M1dHMTJjUWlNaXBnZ0EtUnJXdElsV1RVdW1McEE0VUhlS255elB0VzRnem5C?oc=5" target="_blank" rel="noopener">Over 700 employees left jobless after Pune IT firm allegedly shuts down without notice - People Matters Media</a><span class="new">NEW</span><div class="meta"><span>People Matters Media</span> · <span>spotted 1 min ago</span></div></article><article class="card" data-cat="General" data-new="1"><a href="https://news.google.com/rss/articles/CBMi9wFBVV95cUxQRWlLbE84ZUxPZnA0LW9vRVBDWjdtb2xiclQyTDlPelhMa2V2Yi1yOVhLaV9WM1RKZndBYzVTX001NG5lOW5UVjgzS1VuVy1DZzJNWUkxQlhiR1VfX2VWcXFXQ2xmZTRmSElxSFVHbFczMGllOHFFdE1oRngxQS1ONnoxN0FVenp1WUV2NDl5cTA2US1ua3ppc1g3Sm94NjhSX2ktYzlkQ0k2NHNTVmp0b2E0MnMza1BqT1R4TVE1QkM2Mk5USlJVUldwOWJvNTNoUXExT2wwOUZNZ3ptMG5uMmJmS3Z4eWY0TjZDd3FOblNJM1FxZlJj0gH8AUFVX3lxTE1MTHFyVC1aVFE1Wl9YUE5OcFBubndBTDMzaXN4R3AyQVN6a1p1bmoxNWIxNXR3ZktvOUMzMjZGSGg4RkxWdTd1Y3FFekNIdmR6LVZubTl0Nm9LMUZOYV9FMlhSTGFVZ05paGVZVXJGdjhhZG1iTU1zeTRydVhRRDltTnJZcFhBWVp1Y0VhV04wQTc4OTRjUmo0dGRfREMyZktwazhTdjdXbmJ4djJuR2padUNxZ3NrSVpvRnpvQTVONzB5R2VNdGhzSGdhWDBaZWgwWmoxR3UxYzhzTG1xZ2NEamtZcjdtbGs4a0VXUUdndVRJSjBWeUs1elhjTQ?oc=5" target="_blank" rel="noopener">Unpaid salaries, bounced cheques: 700 lose jobs as Pune IT firm abruptly shuts ops - India Today</a><span class="new">NEW</span><div class="meta"><span>India Today</span> · <span>spotted 1 min ago</span></div></article><article class="card" data-cat="General" data-new="1"><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxQNTROaFF1X1hiWnBrX251Y05BNlg0SzZVd2YxVHNwelRpV3lpam4yczlDelVuNmZxRGFmNGpjVUIzN2pVbk05Y0wyeUpuRWdmZExHZTBQUGlHMDRTaDZnbXFPUnZiaG5SQm9tdHFaQXNNLVlLVHB1ZFRNTEtTLWJ3VDdpXy13X2FvODMzUXJIZ29mZ1JNT1pKc2R4RzhSbExiZzZXZkR5ZzJYaXdNQ0VuNF9ma1VhS1laZWVIdDgwY9IBxAFBVV95cUxOa09OazR2YUxxMGREME15VndJZVJKOFhubUtCWHlhS2VqUVh5d1F3U19wUnF5LUEyUHJBRDV5al9DaWxVMk0xTWVzQUx0VGpEOFZhNC04cnJlRUhxQnFNVjFVdl9fX1N0Z2IzcDkta1RhaGE4NTBPUXpBUDladnp1UFhWX29qLW0zUHdrbUVPNDZrdWFwU3dNdmJoNkRVUTZJX210SDNVR2dyWE0wdlNVVTJTVFZFSlFkVlNHaEdiLWhjVThN?oc=5" target="_blank" rel="noopener">700 recruits, 12 projects, one vanished company: Inside Pune&#x27;s IT job fraud - India Today</a><span class="new">NEW</span><div class="meta"><span>India Today</span> · <span>spotted 1 min ago</span></div></article><article class="card" data-cat="General" data-new="1"><a href="https://news.google.com/rss/articles/CBMi6gFBVV95cUxNNE42VF9sVWpCeXk2MGZOMmctcFI5MEhpeTlSX3ltQ1VERU1ON1lyNGZsNjd1Rkh0VEZSTDRSNS1HQTVsdVZNNWVEc3FOMnhDbElnbEM1YVN1ck5ZX2Eyby1Vc2xCNGotYnBrUXNDVU5kdUp1YlV1S3NsaFpLNTFNM1dFSTBoQU1Pc2ZmUmhUalBCb01DdHdxUWlXSGlwWU9KYTA5cFI5SVkwUlNpMmJFX0VaSy1LYW81R3NVNjJxQ01sN0VPbUZYM1pxUmxfRThiYnJWVlRfTTg3Qlp3cFI2WFVhcnpNWklQc1HSAe8BQVVfeXFMTnp1QzVBclFZVEtCMWdqczhnanpDcEV6ZkJCM213RUZMZUU4X2lYeFJJTE1kWC1KTFZ0UDBnNW1Nd0pNdUN0bnNZRUUwdk40Yi0yT0NkeW8zcG9JaU9vWjB2UTVreFRWNWl5OF9uaVlGSEp5WFJ0MGs3bmIyVWdWdTFJN1dxS0RwSEkwMkpwdnpnZldXeVFSSGFXTE85bndrSTB5ZWJFWllaZlRmLUVJcXNON1RvcVlCZkNLRE5Zb01DT3l4VFFHSmVXblhzSk9oZXZ5eE9KQVFvNEYtQjJRWjhubi1Nb3FmaUhQV3lPLVE?oc=5" target="_blank" rel="noopener">&#x27;Brutal&#x27;: Pune-based IT firm shuts down overnight, leaves 700 employees jobless. CEO arrested - Moneycontrol.com</a><span class="new">NEW</span><div class="meta"><span>Moneycontrol.com</span> · <span>spotted 1 min ago</span></div></article><article class="card" data-cat="General" data-new="1"><a href="https://news.google.com/rss/articles/CBMi8AFBVV95cUxNMG5pZ3BaZlBtX1poOVg4UjI5R19jR0FmaDVuXzJQb2hrTi0tQzM5Z2V1cW82RC1ELTYwY3pqaEg1TUNFM1A0SmF5QVFKV01yUkpuRmFKTng0TTdQOEpNZjZEOGZ4T3MxRjFMYlFvX0dTSFUtY1dsZ21NVTVlQlp5UzVSNmd6aTZYbXpuLUZNV1Nhc29XblJfQzJEZXJxazJNSTIyNkxvdG5xS3FTTGMzek05MDBQdzYwR05MLUdmNUNDekNjUU9IbFJzaXpsUnVhVlJDbnp0YjNDbF82dUM4Y2V6QlFqN3Y4YTdycm1oTFA?oc=5" target="_blank" rel="noopener">ThynkTech India Shuts Pune Branch Overnight: 500+ IT Employees Jobless, CEO Detained for ₹15,000 Laptop Deposit Scam - Saptashwa TV</a><span class="new">NEW</span><div class="meta"><span>Saptashwa TV</span> · <span>spotted 1 min ago</span></div></article></section></main>
+<footer>Always apply on the company's official career page (these links are
+announcements, not application forms). Get instant push alerts on
+<a href="https://t.me/rbcet_placements">Telegram</a>. Sources: public news feeds; drive dates
+must be verified on official portals.</footer>
+<script>
+var f="all";
+function apply(){var q=document.getElementById("q").value.toLowerCase();
+ document.querySelectorAll(".card").forEach(function(c){
+  var ok=(f==="all")||(f==="new"&&c.dataset.new==="1")||(c.dataset.cat===f);
+  if(ok&&q)ok=c.textContent.toLowerCase().indexOf(q)>-1;
+  c.classList.toggle("hide",!ok);});
+ document.querySelectorAll(".cat").forEach(function(s){
+  s.classList.toggle("hide",
+   s.querySelectorAll(".card:not(.hide)").length===0);});}
+document.querySelectorAll(".chip").forEach(function(ch){
+ ch.onclick=function(){document.querySelectorAll(".chip")
+  .forEach(function(x){x.classList.remove("active")});
+  ch.classList.add("active");f=ch.dataset.f;apply();}});
+document.getElementById("q").oninput=apply;
+</script></body></html>
