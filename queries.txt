@@ -1,0 +1,37 @@
+# Format:  Category :: search query
+# One per line. Lines starting with # are ignored.
+# Categories control the portal sections. Edit queries freely each season.
+
+# ---- Services floor (compulsory, all groups) ----
+Services :: TCS NQT registration
+Services :: Infosys off campus drive
+Services :: Wipro Elite NTH registration
+Services :: Cognizant GenC registration
+Services :: Capgemini off campus drive
+Services :: Accenture associate software engineer freshers
+Services :: off campus drive 2027 batch
+Services :: off campus drive 2026 batch freshers
+
+# ---- Hiring challenges / hackathons (Groups A & B) ----
+Hiring Challenges :: Flipkart GRiD registration
+Hiring Challenges :: JPMorgan Code for Good India
+Hiring Challenges :: Goldman Sachs campus hiring India
+Hiring Challenges :: Amazon HackOn registration
+Hiring Challenges :: Unstop hiring challenge software
+
+# ---- Big tech, product and GCC (Group A) ----
+Big Tech & GCC :: Amazon SDE off campus India
+Big Tech & GCC :: Google software engineer university graduate India
+Big Tech & GCC :: Microsoft off campus freshers India
+Big Tech & GCC :: Zoho recruitment freshers
+Big Tech & GCC :: GCC fresher hiring India
+Big Tech & GCC :: Walmart Global Tech hiring freshers
+Big Tech & GCC :: American Express campus hiring India
+
+# ---- Women-only programs ----
+Women-only :: Amazon WOW registration
+Women-only :: Walmart CodeHers registration
+Women-only :: Flipkart Runway registration
+
+# ---- General ----
+General :: fresher hiring drive software engineer India
