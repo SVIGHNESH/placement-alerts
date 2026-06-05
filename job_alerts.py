@@ -28,7 +28,7 @@ PORTAL_FILE = os.path.join("docs", "index.html")
 QUERIES_FILE = "queries.txt"
 TELEGRAM_LINK = "https://t.me/rbcet_placements"  # edit to your channel link
 
-MAX_AGE_DAYS = 3        # ignore news older than this when fetching
+MAX_AGE_DAYS = 15        # ignore news older than this when fetching
 KEEP_DAYS = 45          # how long items stay on the portal
 MAX_JOBS = 600
 MAX_ITEMS_PER_QUERY = 8
