@@ -37,6 +37,29 @@ IST = timezone(timedelta(hours=5, minutes=30))
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
+
+# ---- Relevance filter (editable) ----
+# A title must contain at least one INCLUDE word and no EXCLUDE word.
+INCLUDE_WORDS = ["off campus", "off-campus", "drive", "hiring", "registration",
+                 "register", "recruitment", "recruit", "apply", "application",
+                 "vacanc", "opening", "walk-in", "walkin", "internship",
+                 "intern", "job", "career", "nqt", "hackathon", "freshers"]
+EXCLUDE_WORDS = ["layoff", "laid off", "jobless", "shut down", "shutdown",
+                 "shuts", "scam", "fraud", "arrested", "strike", "protest",
+                 "report", "trends", "summit", "felicitated", "convocation",
+                 "fest", "lose job", "loses job", "salary delay"]
+
+
+def is_relevant(title):
+    t = title.lower()
+    if any(w in t for w in EXCLUDE_WORDS):
+        return False
+    return any(w in t for w in INCLUDE_WORDS)
+
+
+def norm_title(title):
+    return re.sub(r"[^a-z0-9]", "", title.lower())[:70]
+
 CATEGORY_ORDER = ["Hiring Challenges", "Big Tech & GCC", "Services",
                   "Women-only", "General"]
 CATEGORY_COLOR = {"Services": "#2e6e4e", "Hiring Challenges": "#b3541e",
@@ -283,7 +306,8 @@ def main():
     now = datetime.now(IST)
     seen = load_json(SEEN_FILE, [])
     seen_set = set(seen)
-    jobs = load_json(JOBS_FILE, [])
+    jobs = [j for j in load_json(JOBS_FILE, []) if is_relevant(j["title"])]
+    titles_seen = {norm_title(j["title"]) for j in jobs}
     new_lines = []
 
     for category, query in load_queries():
@@ -306,6 +330,10 @@ def main():
             seen_set.add(lid)
             seen.append(lid)
             title = clean_title(item["title"])
+            nt = norm_title(title)
+            if not is_relevant(title) or nt in titles_seen:
+                continue
+            titles_seen.add(nt)
             jobs.append({"id": lid, "title": title, "link": item["link"],
                          "source": item["source"], "category": category,
                          "first_seen": now.isoformat()})
