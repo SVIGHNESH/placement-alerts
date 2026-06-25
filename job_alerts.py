@@ -290,9 +290,10 @@ def telegram_send(text, token, chat_id, dry_run=False):
         with urllib.request.urlopen(req, timeout=30) as r:
             return r.status == 200
     except Exception as e:
-        print(f"Telegram send failed: {e}", file=sys.stderr)
-        return False
-
+      import traceback
+      traceback.print_exc()
+      print(f"Telegram send failed: {repr(e)}", file=sys.stderr)
+      return False
 
 def chunk_messages(header, lines, limit=3500):
     current = header
