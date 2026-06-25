@@ -1,0 +1,59 @@
+# Official company job boards = GENUINE openings with direct apply links.
+# These come from companies' own Applicant Tracking Systems (ATS), not news.
+#
+# Format:  Category :: provider :: token
+#   provider = greenhouse | lever
+#   token    = the company slug in its careers-board URL.
+#
+# How to find a token:
+#   Open the company's "Careers" page and look at the job-board URL.
+#   * boards.greenhouse.io/<token>  /  job-boards.greenhouse.io/<token>  -> greenhouse
+#   * jobs.lever.co/<token>                                              -> lever
+#   Use that <token> below. Lines starting with # are ignored.
+#
+# Jobs are auto-filtered to India locations and entry/first-job roles for
+# CSE/AI students (senior + 3-plus-years roles are dropped using the job
+# description, not just the title). The companies below were verified to have
+# live India listings; remove any you don't want, add your own freely.
+
+# ---- Indian product companies (Lever) ----
+Official Openings :: lever :: meesho
+Official Openings :: lever :: paytm
+Official Openings :: lever :: cred
+
+# ---- Indian product companies (Greenhouse) ----
+Official Openings :: greenhouse :: groww
+Official Openings :: greenhouse :: phonepe
+Official Openings :: greenhouse :: postman
+
+# ---- Global tech with India offices / GCCs (Greenhouse) ----
+Official Openings :: greenhouse :: databricks
+Official Openings :: greenhouse :: twilio
+Official Openings :: greenhouse :: gitlab
+Official Openings :: greenhouse :: roblox
+Official Openings :: greenhouse :: rubrik
+Official Openings :: greenhouse :: newrelic
+Official Openings :: greenhouse :: airbnb
+Official Openings :: greenhouse :: netskope
+Official Openings :: greenhouse :: sumologic
+Official Openings :: greenhouse :: elastic
+Official Openings :: greenhouse :: druva
+Official Openings :: greenhouse :: datadog
+Official Openings :: greenhouse :: zscaler
+Official Openings :: greenhouse :: toast
+Official Openings :: greenhouse :: coinbase
+Official Openings :: greenhouse :: mongodb
+Official Openings :: greenhouse :: coursera
+Official Openings :: greenhouse :: scaleai
+Official Openings :: greenhouse :: flexport
+Official Openings :: greenhouse :: figma
+Official Openings :: greenhouse :: cockroachlabs
+Official Openings :: greenhouse :: amplitude
+Official Openings :: greenhouse :: verkada
+Official Openings :: greenhouse :: stripe
+Official Openings :: greenhouse :: anthropic
+Official Openings :: greenhouse :: mixpanel
+
+# ---- Add your own, e.g. ----
+# Official Openings :: greenhouse :: <company-token>
+# Official Openings :: lever :: <company-token>

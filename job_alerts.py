@@ -26,6 +26,7 @@ SEEN_FILE = "seen.json"
 JOBS_FILE = "jobs.json"
 PORTAL_FILE = os.path.join("docs", "index.html")
 QUERIES_FILE = "queries.txt"
+SOURCES_FILE = "sources.txt"
 TELEGRAM_LINK = "https://t.me/rbcet_placements"  # edit to your channel link
 
 MAX_AGE_DAYS = 15        # ignore news older than this when fetching
@@ -60,11 +61,78 @@ def is_relevant(title):
 def norm_title(title):
     return re.sub(r"[^a-z0-9]", "", title.lower())[:70]
 
-CATEGORY_ORDER = ["Hiring Challenges", "Big Tech & GCC", "Services",
-                  "Women-only", "General"]
-CATEGORY_COLOR = {"Services": "#2e6e4e", "Hiring Challenges": "#b3541e",
-                  "Big Tech & GCC": "#1f4e79", "Women-only": "#8a3a64",
-                  "General": "#5a5247"}
+CATEGORY_ORDER = ["Official Openings", "Hiring Challenges", "Big Tech & GCC",
+                  "Services", "Women-only", "General"]
+CATEGORY_COLOR = {"Official Openings": "#2f6f6f", "Services": "#2e6e4e",
+                  "Hiring Challenges": "#b3541e", "Big Tech & GCC": "#1f4e79",
+                  "Women-only": "#8a3a64", "General": "#5a5247"}
+
+# ---- Filter for official ATS feeds (companies post global/senior roles too) ----
+INDIA_HINTS = ["india", "bengaluru", "bangalore", "hyderabad", "pune", "mumbai",
+               "delhi", "gurugram", "gurgaon", "noida", "chennai", "kolkata",
+               "ahmedabad", "jaipur", "indore"]
+# CSE/AI-relevant roles only (drops sales, HR, design, PR, finance, content).
+# CSE/AI-relevant roles only (drops sales, HR, design, PR, finance, content).
+TECH_WORDS = ["engineer", "developer", "software", "sde", "sdet", "programmer",
+              "data scientist", "data analyst", "machine learning", " ml ",
+              "ml engineer", "ai engineer", "ai/ml", "devops", "sre",
+              "qa ", "quality engineer", "backend", "back end", "frontend",
+              "front end", "fullstack", "full stack", "cloud", "security",
+              "android", "ios", "mobile developer", "platform engineer",
+              "systems engineer", "database", "research scientist",
+              "applied scientist", "computer"]
+SENIOR_WORDS = ["senior", "sr.", "staff", "principal", "lead ", " lead", "manager",
+                "director", "head of", "vp ", "vice president", "architect",
+                " ii", " iii", " iv", "l3", "l4", "l5", "experienced",
+                "expert", "specialist", " sii", " siii"]
+# First-job signals in the TITLE (strong on their own).
+FRESHER_TITLE_WORDS = ["intern", "new grad", "new-grad", "graduate engineer",
+                       "graduate software", "trainee", "apprentice",
+                       "campus", "entry level", "entry-level", "fresher",
+                       "associate engineer", "early career", "early talent"]
+# First-job signals in the BODY. Strict phrases only: bare words like
+# "graduate"/"campus" appear in every JD's education section, so we avoid them.
+FRESHER_BODY_WORDS = ["0-1 year", "0-2 year", "0 to 1 year", "0 to 2 year",
+                      "no prior experience", "no professional experience",
+                      "recent graduate", "recent graduates", "fresh graduate",
+                      "fresher", "final year student", "entry level",
+                      "entry-level", "new graduate"]
+
+# A level suffix like "Engineer 2", "Developer III" -> not a first job.
+LEVEL_RE = re.compile(r"\b(?:ii|iii|iv|v|[2-9])\s*$", re.I)
+# Title experience requirement, e.g. "4-8yrs", "5+ years".
+EXP_TITLE_RE = re.compile(r"\d+\s*(?:\+|-|–|to)?\s*\d*\s*(?:yr|year)", re.I)
+# Body experience requirement of 3+ years (0-2 yrs is fine for freshers).
+EXP_BODY_RE = re.compile(
+    r"\b([3-9]|1\d|2\d)\s*\+?\s*(?:-|to|–)?\s*\d*\s*\+?\s*years?", re.I)
+
+
+def is_fresher(title, body=""):
+    t = title.lower()
+    if any(w in t for w in FRESHER_TITLE_WORDS):
+        return True
+    return any(w in body.lower() for w in FRESHER_BODY_WORDS)
+
+
+def ats_keep(title, location, body=""):
+    """Keep India-located CSE/AI roles open to first-job freshers.
+
+    Senior level, level suffixes, and a 3-plus-year experience requirement
+    (read from the job description, not just the title) are hard rejects.
+    """
+    t = title.lower()
+    loc = (location or "").lower()
+    if not any(h in loc for h in INDIA_HINTS):
+        return False
+    if not any(w in t for w in TECH_WORDS):   # CSE/AI-relevant roles only
+        return False
+    if EXP_TITLE_RE.search(title) or EXP_BODY_RE.search(body):
+        return False                  # requires 3+ years -> not a first job
+    if any(w in t for w in SENIOR_WORDS):
+        return False                  # senior/staff/principal/manager/lead
+    if LEVEL_RE.search(t.strip()):    # "Engineer 2/3", "Developer III"
+        return False
+    return True
 
 
 def load_queries():
@@ -81,6 +149,75 @@ def load_queries():
             else:
                 out.append(("General", line))
     return out
+
+
+def load_sources():
+    """Return list of (category, provider, token) from sources.txt."""
+    out = []
+    if not os.path.exists(SOURCES_FILE):
+        return out
+    with open(SOURCES_FILE, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            parts = [p.strip() for p in line.split("::")]
+            if len(parts) == 3 and parts[1] and parts[2]:
+                out.append((parts[0] or "Official Openings",
+                            parts[1].lower(), parts[2]))
+    return out
+
+
+def parse_iso(s):
+    if not isinstance(s, str) or not s:
+        return None
+    try:
+        d = datetime.fromisoformat(s)
+        return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def strip_html(s):
+    return " ".join(re.sub(r"<[^>]+>", " ", html.unescape(s or "")).split())
+
+
+def fetch_greenhouse(token):
+    """Genuine openings from a company's Greenhouse board (no key needed).
+
+    Pulls full job descriptions (content=true) so we can detect the real
+    experience requirement, which the title alone rarely states.
+    """
+    data = json.loads(fetch(
+        f"https://boards-api.greenhouse.io/v1/boards/{token}/jobs?content=true"))
+    out = []
+    for j in data.get("jobs", []):
+        out.append({"title": (j.get("title") or "").strip(),
+                    "link": j.get("absolute_url", ""),
+                    "location": (j.get("location") or {}).get("name", ""),
+                    "body": strip_html(j.get("content")),
+                    "source": token.replace("-", " ").title(),
+                    "published": parse_iso(j.get("updated_at"))})
+    return out
+
+
+def fetch_lever(token):
+    """Genuine openings from a company's Lever board (no key needed)."""
+    data = json.loads(fetch(
+        f"https://api.lever.co/v0/postings/{token}?mode=json"))
+    out = []
+    for j in data:
+        cats = j.get("categories") or {}
+        out.append({"title": (j.get("text") or "").strip(),
+                    "link": j.get("hostedUrl", ""),
+                    "location": cats.get("location", "") or "",
+                    "body": j.get("descriptionPlain", "") or "",
+                    "source": token.replace("-", " ").title(),
+                    "published": parse_iso(j.get("createdAt"))})
+    return out
+
+
+FETCHERS = {"greenhouse": fetch_greenhouse, "lever": fetch_lever}
 
 
 def load_json(path, default):
@@ -190,7 +327,8 @@ def render_portal(jobs, now):
     cats = [c for c in CATEGORY_ORDER
             if any(j["category"] == c for j in jobs)]
     chips = ['<button class="chip active" data-f="all">All</button>',
-             '<button class="chip" data-f="new">New 24h</button>']
+             '<button class="chip" data-f="new">New 24h</button>',
+             '<button class="chip" data-f="fresher">Freshers</button>']
     chips += [f'<button class="chip" data-f="{html.escape(c)}">{html.escape(c)}</button>'
               for c in cats]
 
@@ -202,10 +340,15 @@ def render_portal(jobs, now):
         for j in items:
             is_new = datetime.fromisoformat(j["first_seen"]) >= new_cut
             badge = '<span class="new">NEW</span>' if is_new else ""
+            if j.get("fresher"):
+                badge += '<span class="fresher">FRESHER</span>'
             src = f'<span>{html.escape(j["source"])}</span> · ' if j["source"] else ""
+            if j.get("location"):
+                src += f'<span>{html.escape(j["location"])}</span> · '
             cards.append(
                 f'<article class="card" data-cat="{html.escape(cat)}" '
-                f'data-new="{1 if is_new else 0}">'
+                f'data-new="{1 if is_new else 0}" '
+                f'data-fresher="{1 if j.get("fresher") else 0}">'
                 f'<a href="{html.escape(j["link"])}" target="_blank" rel="noopener">'
                 f'{html.escape(j["title"])}</a>{badge}'
                 f'<div class="meta">{src}<span>spotted {age_label(j["first_seen"], now)}</span></div>'
@@ -257,6 +400,8 @@ main{{max-width:880px;margin:0 auto;padding:8px 16px 40px}}
 .meta{{color:var(--muted);font-size:13px;margin-top:4px}}
 .new{{background:var(--accent);color:#fff;font:700 11px "IBM Plex Sans",sans-serif;
  padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:2px}}
+.fresher{{background:#2f6f6f;color:#fff;font:700 11px "IBM Plex Sans",sans-serif;
+ padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:2px}}
 .hide{{display:none}}
 footer{{max-width:880px;margin:0 auto;padding:18px 16px 50px;color:var(--muted);
  font-size:13px;border-top:3px double var(--ink)}}
@@ -281,7 +426,7 @@ must be verified on official portals.</footer>
 var f="all";
 function apply(){{var q=document.getElementById("q").value.toLowerCase();
  document.querySelectorAll(".card").forEach(function(c){{
-  var ok=(f==="all")||(f==="new"&&c.dataset.new==="1")||(c.dataset.cat===f);
+  var ok=(f==="all")||(f==="new"&&c.dataset.new==="1")||(f==="fresher"&&c.dataset.fresher==="1")||(c.dataset.cat===f);
   if(ok&&q)ok=c.textContent.toLowerCase().indexOf(q)>-1;
   c.classList.toggle("hide",!ok);}});
  document.querySelectorAll(".cat").forEach(function(s){{
@@ -306,7 +451,8 @@ def main():
     now = datetime.now(IST)
     seen = load_json(SEEN_FILE, [])
     seen_set = set(seen)
-    jobs = [j for j in load_json(JOBS_FILE, []) if is_relevant(j["title"])]
+    jobs = [j for j in load_json(JOBS_FILE, [])
+            if j.get("official") or is_relevant(j["title"])]
     titles_seen = {norm_title(j["title"]) for j in jobs}
     new_lines = []
 
@@ -340,6 +486,46 @@ def main():
             src = f" ({item['source']})" if item["source"] else ""
             new_lines.append(f"[{category}] {title}{src}\n{item['link']}")
             count += 1
+
+    # ---- Official company boards (genuine openings, direct apply links) ----
+    for category, provider, token in load_sources():
+        fn = FETCHERS.get(provider)
+        if not fn:
+            print(f"Unknown source provider: {provider}", file=sys.stderr)
+            continue
+        try:
+            items = fn(token)
+        except Exception as e:
+            print(f"Source failed {provider}/{token}: {e}", file=sys.stderr)
+            continue
+        kept = 0
+        for item in items:
+            body = item.get("body", "")
+            if not ats_keep(item["title"], item.get("location", ""), body):
+                continue
+            lid = link_id(item["link"])
+            if lid in seen_set:
+                continue
+            seen_set.add(lid)
+            seen.append(lid)
+            title = clean_title(item["title"])
+            nt = norm_title(title)
+            if nt in titles_seen:
+                continue
+            titles_seen.add(nt)
+            loc = item.get("location", "")
+            fresher = is_fresher(title, body)
+            jobs.append({"id": lid, "title": title, "link": item["link"],
+                         "source": item["source"], "category": category,
+                         "official": True, "fresher": fresher, "location": loc,
+                         "first_seen": now.isoformat()})
+            extra = f", {loc}" if loc else ""
+            tag = "[Fresher] " if fresher else ""
+            new_lines.append(
+                f"[{category}] {tag}{title} ({item['source']}{extra})\n{item['link']}")
+            kept += 1
+        print(f"{provider}/{token}: {kept} new official opening(s)",
+              file=sys.stderr)
 
     # prune portal data
     cutoff = now - timedelta(days=KEEP_DAYS)
