@@ -489,15 +489,15 @@ def main():
             count += 1
 
     # ---- Official company boards (genuine openings, direct apply links) ----
-    for category, provider, token in load_sources():
+    for category, provider, source_token in load_sources():
         fn = FETCHERS.get(provider)
         if not fn:
             print(f"Unknown source provider: {provider}", file=sys.stderr)
             continue
         try:
-            items = fn(token)
+            items = fn(source_token)
         except Exception as e:
-            print(f"Source failed {provider}/{token}: {e}", file=sys.stderr)
+            print(f"Source failed {provider}/{source_token}: {e}", file=sys.stderr)
             continue
         kept = 0
         for item in items:
